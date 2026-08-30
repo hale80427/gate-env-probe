@@ -37,7 +37,8 @@
 </head>
 <body>
 <h1>交付閘環境探針</h1>
-<p class="sub">第 206 跑。這一頁自己量，你只要截圖。<b>先整頁捲到底再截</b>——有兩項要捲過才準。</p>
+<p class="sub">第 206 跑 · v2（修掉探針自己跑兩次的 bug）。這一頁自己量，你只要截圖。<b>先整頁捲到底再截</b>。<br>
+<b>第 5 節有一題要你用眼睛看</b>，程式看不到那一半。</p>
 
 <section id="verdict"><h2>結論</h2><div id="vbody">量測中…</div></section>
 
@@ -50,8 +51,13 @@
   <div class="clipwrap"><div class="stagewrap" id="sw2"><div class="sticky" id="sk2">我在 overflow-x:clip 底下</div><div class="filler"></div></div></div>
   <table id="t-sticky"></table></section>
 <section><h2>5. 影片 seek 會不會重繪（KB-11 F16）</h2>
+  <p class="sub" style="margin:0 0 8px"><b>先用眼睛看這兩格：它們應該長得一模一樣（紫色的 5）。</b><br>
+     左邊是影片 seek 到 2.6 秒，右邊是同一幀的 PNG。左邊如果是黑的或別的數字 ⇒ F16 複現。</p>
   <div class="pair"><video id="v" src="assets/seq.webm" preload="auto" muted playsinline></video>
-    <span>從沒播過，只設 currentTime</span></div>
+    <img class="fr" src="assets/f5.png" alt="">
+    <span>影片（seek 到 2.6s）／該幀 PNG</span></div>
+  <p class="sub" style="margin:0 0 6px">⚠ 下面的讀數是 <b>canvas 取到的幀</b>，不是<b>螢幕畫出來的</b>。
+     iOS 上這兩件事可能不一樣——那正是 F16。螢幕那一半只有你的眼睛看得到。</p>
   <table id="t-video"></table></section>
 <section><h2>6. 圖片序列（對照組·應該永遠會變）</h2>
   <div class="pair"><img class="fr" id="im" src="assets/f0.png" alt=""><span>只換 img.src</span></div>
@@ -169,11 +175,14 @@ var v=document.getElementById('v');
 function videoTest(){
   var tvd=document.getElementById('t-video');
   return new Promise(function(done){
+    var gave=false;
     var give=function(){
+      if(gave) return; gave=true;
       R.video={ readyState:v.readyState, error:v.error?v.error.code:null,
                 duration:px(v.duration||0), vw:v.videoWidth, vh:v.videoHeight,
                 seekable: v.seekable&&v.seekable.length? [px(v.seekable.start(0)),px(v.seekable.end(0))] : null };
       var g0=grab(v);
+      R.video.rgb_at_zero = g0.rgb;
       v.currentTime = 2.6;
       var fin=function(){
         setTimeout(function(){
@@ -189,8 +198,10 @@ function videoTest(){
           row(tvd,'設定後的 currentTime', R.video.currentTime_after);
           row(tvd,'畫面像素 RGB（seek 前 → 後）',
               (g0.rgb?g0.rgb.join(','):'?')+' → '+(g1.rgb?g1.rgb.join(','):'?'));
-          row(tvd,'seek 有重繪嗎', R.video.err? ('量不到：'+R.video.err)
+          row(tvd,'canvas 在 t=0 取到的 RGB', g0.rgb?g0.rgb.join(','):'?');
+          row(tvd,'canvas 有取到新幀嗎', R.video.err? ('量不到：'+R.video.err)
               : (R.video.seek_repaints?'有':'★ 沒有'), R.video.seek_repaints?'ok':'hit');
+          row(tvd,'螢幕上兩格長得一樣嗎','↑ 請你自己看','');
           done();
         }, 500);
       };
@@ -228,7 +239,7 @@ Promise.resolve().then(function(){ return wait(300); })
   if(R.text_inflated) hits.push('文字被自動放大（16px 實為 '+R.tsa_auto+'）');
   if(R.sticky_ok===false) hits.push('一般 sticky 沒釘住');
   if(R.sticky_clip_ok===false) hits.push('overflow-x:clip 底下 sticky 失效');
-  if(R.video && R.video.seek_repaints===false) hits.push('★ 影片 seek 不重繪（F16 複現）');
+  if(R.video && R.video.seek_repaints===false) hits.push('★ canvas 取不到新幀（比 F16 更嚴重）');
   if(R.imgseq && R.imgseq.repaints===false) hits.push('圖片序列也不重繪（對照組壞了，讀數不可用）');
   if(R.content_w < 300) hits.push('內文欄寬 '+R.content_w+' < 300');
   R.hits = hits;
