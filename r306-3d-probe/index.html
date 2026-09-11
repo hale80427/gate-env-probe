@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>兩條刃帶，一次觀看的限制｜互動幾何筆記</title>
+<script>
+// @figure-spec-source
+const DIM = Object.freeze({
+  diameter: 10,             // mm，鑽徑
+  fluteLength: 38,          // mm，螺旋段長
+  shankLength: 14,          // mm，柄長
+  shankDiameter: 10,        // mm，柄徑
+  helixAngleDeg: 30,        // °，螺旋角
+  marginWidth: 0.42,        // mm，刃帶圓周寬
+  webThickness: 2.6,        // mm，芯厚
+  fluteDepth: 3.7,          // mm，徑向溝槽深
+  pointAngleDeg: 118,       // °，鑽尖夾角
+  landSpanDeg: 70,          // °，每瓣實體背部角寬
+  landRelief: 0.28,         // mm，刃帶後方徑向退讓
+  cornerMarkerRadius: 0.55  // mm，外緣角圖示半徑，非磨耗量
+});
+// @end-figure-spec-source
+</script>
+<style>
+:root{color-scheme:light;--ink:#192c32;--muted:#607076;--paper:#f3f1eb;--teal:#087e8b;--amber:#aa611e}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.7 system-ui,-apple-system,"PingFang TC",sans-serif}main{max-width:1400px;margin:auto;padding:30px 44px}header{border-top:2px solid var(--ink);padding-top:17px;display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.eyebrow{font:11px/1.5 monospace;letter-spacing:2px;color:var(--muted)}h1{font-size:38px;line-height:1.25;font-weight:650;letter-spacing:-1.8px;margin:14px 0 9px}header p{margin:0;color:var(--muted)}.folio{font:12px monospace;white-space:nowrap;padding-top:6px}.grid{display:grid;grid-template-columns:1.08fr 1fr;gap:34px;margin-top:28px}.figure{background:#e4e9e8;border:1px solid #cbd4d1;border-radius:5px;overflow:hidden;position:relative}.stagehead{position:absolute;z-index:2;left:22px;top:16px;pointer-events:none}.stagehead strong{font-size:13px}.stagehead span{display:block;font:11px monospace;color:#607076;margin-top:2px}#stage{height:510px;position:relative}canvas{display:block;width:100%;height:100%}.legend{position:absolute;left:22px;bottom:17px;font-size:12px;pointer-events:none}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--teal)}.gold{background:var(--amber)}.legend div{margin-top:3px}.tag{position:absolute;transform:translate(-50%,-50%);border:1px solid currentColor;background:#f8fbf9eb;color:#036572;font:700 12px monospace;padding:2px 7px;border-radius:4px;pointer-events:none}.tag.rear{border-style:dashed;background:#f8fbf9b8}.tag.two{color:#8c4d16}.controls{border-top:1px solid #cbd4d1;background:#f9faf7;padding:18px 22px 20px}.controltitle{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:650}output{font:24px monospace;color:var(--teal)}input[type=range]{width:100%;accent-color:var(--teal);margin:17px 0 4px}.ticks{display:flex;justify-content:space-between;font:10px monospace;color:var(--muted)}.switch{display:flex;gap:10px;align-items:center;margin-top:18px;padding-top:15px;border-top:1px solid #dce1dc;font-size:13px}input[type=checkbox]{width:17px;height:17px;accent-color:var(--teal)}.note{font-size:12px;color:var(--muted);margin:8px 0 0}.claim{border-top:1px solid #bac5c2;padding:16px 0 20px}.claim:first-child{border-top:2px solid var(--ink)}.label{font:11px monospace;letter-spacing:1.6px;color:var(--teal)}h2{font-size:21px;margin:6px 0 12px;letter-spacing:-.5px}.quote{font-size:16px;line-height:1.9;margin:0}.quote strong{font-weight:750}.test{font-size:13px;background:#e8ede7;padding:10px 13px;margin:15px 0 0;border-left:2px solid #769885}.limit{font-size:12px;color:var(--muted);border-top:1px solid #c9d0ca;padding-top:15px}.limit strong{color:var(--ink)}footer{border-top:1px solid #bdc8c3;display:flex;justify-content:space-between;gap:25px;margin-top:24px;padding:15px 0;font-size:11px;color:var(--muted)}#error{display:none;position:absolute;inset:105px 24px auto;background:#fff3df;border:1px solid #c7914b;padding:18px;z-index:5;overflow-wrap:anywhere}#loading{position:absolute;left:22px;top:80px;font-size:13px;color:var(--muted)}.fallback{margin-top:24px;border:1px solid #b7c6c0;padding:20px;background:#fff}.fallback svg{width:100%;height:auto;max-height:470px}button,input{touch-action:manipulation}input:focus-visible{outline:3px solid #72b5be;outline-offset:4px}@media(max-width:850px){main{padding:22px}.grid{grid-template-columns:1fr;gap:24px}h1{font-size:30px}.folio{display:none}#stage{height:480px}footer{display:block}}
+</style>
+</head>
+<body><main>
+<header><div><div class="eyebrow">FIELD NOTE 01 / GEOMETRY AS EVIDENCE</div><h1>兩條刃帶，一次觀看的限制。</h1><p>沿著同一支鑽體轉一圈，檢查「看見一條」是否等於「只有一條」。</p></div><div class="folio">INTERACTIVE STUDY<br>Ø 10 mm · 2 margins</div></header>
+<div class="grid"><section class="figure" aria-label="麻花鑽互動三維幾何">
+<div id="stage"><div class="stagehead"><strong>同一鑽體 · 固定尺度 · 繞軸觀察</strong><span id="status">PARAMETRIC GEOMETRY / LOADING</span></div><div id="loading" role="status">正在載入釘選版本 three.js 0.186.0…</div><div id="error" role="alert"></div><div id="tag1" class="tag" hidden>M1 · C1</div><div id="tag2" class="tag two" hidden>M2 · C2</div><div class="legend"><div><i class="dot"></i>M1 第一條刃帶</div><div><i class="dot gold"></i>M2 第二條刃帶</div><div>C1 / C2：外緣角；虛線標籤＝背面投影</div></div></div>
+<div class="controls"><label class="controltitle" for="rotation"><span>繞軸旋轉 · 驗主張 A</span><output id="angle" for="rotation">0°</output></label><input id="rotation" type="range" min="0" max="360" step="1" value="0" disabled aria-describedby="rotationHelp"><div class="ticks"><span>0°</span><span>90°</span><span>180°</span><span>270°</span><span>360°</span></div><p id="rotationHelp" class="note">轉到 180°，追蹤琥珀色 M2 從背側移到正面；途中 90° 比較兩側刃帶。</p><label class="switch"><input id="highlight" type="checkbox" disabled><span><strong>標出兩個外緣角 · 驗主張 B</strong><br>交點同步標記；背面標籤保留，不代表穿透實體可見。</span></label></div>
+</section><article>
+<section class="claim"><div class="label">CLAIM A / 數量與遮蔽</div><h2>一條輪廓，能代表幾條刃帶？</h2><p class="quote">這支麻花鑽有<strong>兩條</strong>刃帶（margin），相隔 180°。在部分視角下，這兩條會在輪廓上接成一條——<br>這不是假設，是實測：同一張靜態圖送兩次獨立盲讀，<strong>兩次都把兩條讀成一條</strong>。</p><p class="test"><strong>反駁條件：</strong>旋轉完整一圈，若找不到第二條獨立、連續的刃帶，則「兩條」被推翻。顏色只用於辨認身分，不是新增幾何。</p></section>
+<section class="claim"><div class="label">CLAIM B / 位置與局部性</div><h2>磨耗的焦點，是兩個交點。</h2><p class="quote">磨耗不是沿刃帶均勻發生的，它集中在<strong>外緣角</strong>（刃帶與主切邊的交點）。<br>外緣角在鑽體上有兩個、相隔 180°，所以單一視角同樣只看得到一個。</p><p class="test"><strong>反駁條件：</strong>打開高亮並旋轉，應能依序看到 C1、C2 位於兩條主切邊的外端；若少一個，或標記不在交點，幾何便不支持主張。</p></section>
+<div class="limit"><strong>證據邊界</strong>　上方兩段保留委託提供的原文；兩次盲讀的原圖與紀錄未提供，本頁未重做盲讀。兩次誤讀不能推出「任何視角」都重合：90° 可分辨兩側，180° 交換前後位置。模型檢驗的是數量、交點與遮蔽，不能證明磨耗分布；橘紅高亮是待檢驗位置，並非量測磨耗。<br><strong>幾何假設</strong>　示意雙刃麻花鑽；參數式螺旋槽與簡化鑽尖，非實物掃描。未模擬後刀面研磨細節。可見性依視角而變，背面投影標籤不算實體可見。</div>
+</article></div>
+<style>.fallback{display:block}body.render-ok .figure{display:block}.fallback .svgwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.fallback .svgwrap svg{min-width:780px;display:block}</style><section class="fallback"><div class="label">NO JAVASCRIPT / 雙視角幾何示意</div><h2>同一鑽體，0° 與 90° 並排比對</h2><p>實線是朝向觀者的部分，虛線是被遮蔽的刃帶或交點投影。色彩對應同一條刃帶；不是兩支不同的鑽頭。</p>
+<div class="svgwrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 430" role="img" aria-labelledby="svgTitle svgDesc"><title id="svgTitle">兩條相隔半圈的刃帶及兩個外緣角的正交視角</title><desc id="svgDesc">左方零度圖的外緣角前後投影重合，虛線指示背面的 C2；右方九十度圖將 C1 和 C2 分開至左右輪廓，兩條螺旋刃帶以青色和琥珀色追蹤。</desc>
+<rect width="920" height="430" fill="#edf1ed"/><path d="M460 20V410" stroke="#c4d0ca"/><g font-family="sans-serif" font-size="17" fill="#192c32"><text x="35" y="36">0° · 前後遮蔽</text><text x="495" y="36">90° · 兩側分離</text></g>
+<g fill="#b8c6c6" stroke="#657e83" stroke-width="2"><path d="M177 343V124L225 82L273 124V343Z"/><path d="M637 343V124L685 82L733 124V343Z"/><path d="M177 343V385H273V343M637 343V385H733V343"/></g>
+<g fill="none" stroke-width="6"><path d="M225 124C290 168 273 214 225 240S160 300 225 343" stroke="#087e8b"/><path d="M225 124C160 168 177 214 225 240S290 300 225 343" stroke="#aa611e" stroke-dasharray="9 6"/><path d="M637 124C637 178 733 185 733 237S637 290 637 343" stroke="#087e8b"/><path d="M733 124C733 178 637 185 637 237S733 290 733 343" stroke="#aa611e" stroke-dasharray="9 6"/></g>
+<g fill="none" stroke="#e36440" stroke-width="3"><path d="M225 82V124M637 124L685 82L733 124"/><circle cx="225" cy="124" r="11"/><circle cx="225" cy="124" r="17" stroke-dasharray="3 4"/><circle cx="637" cy="124" r="10"/><circle cx="733" cy="124" r="10"/></g>
+<g fill="#192c32" font-family="sans-serif" font-size="13"><text x="292" y="104">C1 正面</text><text x="292" y="126">C2 背面（虛線）</text><path d="M286 114L245 124" stroke="#657e83"/><text x="585" y="105">C1</text><text x="749" y="105">C2</text><text x="283" y="225" fill="#087e8b">M1</text><text x="123" y="225" fill="#aa611e">M2</text><text x="754" y="235" fill="#087e8b">M1</text><text x="594" y="235" fill="#aa611e">M2</text><text x="35" y="411">交點投影重疊，不等於只有一個。</text><text x="495" y="411">兩個交點分開：普遍的「只見一個」有視角限制。</text></g></svg></div>
+<p class="note">手寫 SVG 原理圖，非 3D 投影量測。支持兩條刃帶與兩個交點；不證明盲讀結果或磨耗強度，也不支持所有角度都重合的普遍斷言。</p></section>
+<footer><span>01 — 兩個可檢驗的自由度：繞軸旋轉 / 外緣角標記</span><span>mm · runtime geometry · three.js 0.186.0 · 無外部模型 / 貼圖</span></footer>
+</main>
+<script type="module">
+const stage=document.querySelector('#stage'), error=document.querySelector('#error'), loading=document.querySelector('#loading');
+const rotation=document.querySelector('#rotation'), highlight=document.querySelector('#highlight');
+const showError=e=>{loading.hidden=true;error.style.display='block';error.textContent='3D 載入失敗：'+e+'。請確認網路、CDN 與 WebGL 支援；兩段主張與證據限制仍可閱讀。停用 JavaScript 後可閱讀內嵌雙視角 SVG。';document.querySelector('#status').textContent='RENDER UNAVAILABLE';rotation.disabled=true;highlight.disabled=true;};
+const timeout=setTimeout(()=>showError('等待 three.js 超過 20 秒'),20000);
+try{
+const THREE=await import('https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js');
+clearTimeout(timeout);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#e4e9e8');
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;stage.prepend(renderer.domElement);renderer.domElement.setAttribute('role','img');renderer.domElement.setAttribute('aria-label','參數生成的雙刃麻花鑽：青色 M1 與琥珀色 M2 相隔 180 度');
+const r=DIM.diameter/2, rad=Math.PI/180, top=DIM.fluteLength/2, bottom=-top, tipHeight=r/Math.tan(DIM.pointAngleDeg*rad/2), pitchRate=Math.tan(DIM.helixAngleDeg*rad)/r, marginAngle=DIM.marginWidth/r;
+const model=new THREE.Group();scene.add(model);
+const camera=new THREE.OrthographicCamera();const mid=-DIM.shankLength/2+tipHeight/2;
+camera.position.set(0,mid+DIM.diameter*.8,DIM.fluteLength*3);camera.lookAt(0,mid,0);
+scene.add(new THREE.HemisphereLight(0xffffff,0x4b666d,2.7));const light=new THREE.DirectionalLight(0xffffff,3);light.position.set(-DIM.fluteLength,DIM.fluteLength,DIM.fluteLength);scene.add(light);const rim=new THREE.DirectionalLight(0xc9dedf,2);rim.position.set(DIM.fluteLength,0,-DIM.fluteLength);scene.add(rim);
+const metal=new THREE.MeshStandardMaterial({color:0x78939d,roughness:.34,metalness:.65,side:THREE.DoubleSide});
+const mat1=new THREE.MeshStandardMaterial({color:0x13b4bc,roughness:.3,metalness:.35,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});const mat2=new THREE.MeshStandardMaterial({color:0xe1a34c,roughness:.3,metalness:.35,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+function point(theta,y,radius=r){return new THREE.Vector3(Math.sin(theta)*radius,y,Math.cos(theta)*radius);}
+function profile(theta){const p=((theta%Math.PI)+Math.PI)%Math.PI;if(p<=marginAngle)return r;const land=DIM.landSpanDeg*rad;if(p<land)return r-DIM.landRelief*Math.sin((p-marginAngle)/(land-marginAngle)*Math.PI/2);const t=(p-land)/(Math.PI-land);return Math.max(DIM.webThickness/2,r-DIM.landRelief*(1-t)-DIM.fluteDepth*Math.pow(Math.sin(Math.PI*t),.65));}
+function surface(rows,cols,fn,material){const v=[],idx=[];for(let i=0;i<=rows;i++)for(let j=0;j<=cols;j++){const p=fn(i/rows,j/cols);v.push(p.x,p.y,p.z);}for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){const a=i*(cols+1)+j,b=a+cols+1;idx.push(a,b,a+1,b,b+1,a+1);}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(v,3));g.setIndex(idx);g.computeVertexNormals();const mesh=new THREE.Mesh(g,material);model.add(mesh);return mesh;}
+surface(220,180,(u,v)=>{const y=top-u*DIM.fluteLength,theta=v*Math.PI*2;return point(theta-u*DIM.fluteLength*pitchRate,y,profile(theta));},metal);
+for(let k=0;k<2;k++){
+const phase=k*Math.PI;
+surface(220,4,(u,v)=>point(phase+v*marginAngle-u*DIM.fluteLength*pitchRate,top-u*DIM.fluteLength),k?mat2:mat1);
+}
+// 簡化鑽尖：橫截面收斂到尖端；主切邊沿每條刃帶起點連到鑽尖。
+surface(24,180,(u,v)=>{const theta=v*Math.PI*2;return point(theta,top+u*tipHeight,profile(theta)*(1-u));},metal);
+const shank=new THREE.Mesh(new THREE.CylinderGeometry(DIM.shankDiameter/2,DIM.shankDiameter/2,DIM.shankLength,96),metal);shank.position.y=bottom-DIM.shankLength/2;model.add(shank);
+const corners=[], markers=[];for(let k=0;k<2;k++){
+const c=point(k*Math.PI,top);corners.push(c);
+const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([c,point(k*Math.PI,top+tipHeight,0)]),new THREE.LineBasicMaterial({color:k?0xe1a34c:0x13b4bc}));model.add(line);
+const marker=new THREE.Mesh(new THREE.SphereGeometry(DIM.cornerMarkerRadius,24,16),new THREE.MeshBasicMaterial({color:0xf36642}));marker.position.copy(c);marker.visible=false;model.add(marker);markers.push(marker);
+}
+const tags=[document.querySelector('#tag1'),document.querySelector('#tag2')];
+function render(){
+model.rotation.y=Number(rotation.value)*rad;model.updateMatrixWorld(true);renderer.render(scene,camera);
+const rect=stage.getBoundingClientRect();corners.forEach((c,i)=>{const world=c.clone().applyMatrix4(model.matrixWorld);const p=world.clone().project(camera);tags[i].hidden=!highlight.checked;const rear=world.z < -r*1e-6;const side=Math.abs(world.x)>r*.15?Math.sign(world.x):(i?1:-1);tags[i].classList.toggle('rear',rear);tags[i].textContent=`M${i+1} · C${i+1}${rear?' 背面':''}`;tags[i].style.left=((p.x+1)/2*rect.width+side*66)+'px';tags[i].style.top=((1-p.y)/2*rect.height+14)+'px';});
+}
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;const height=(DIM.fluteLength+DIM.shankLength+tipHeight)*1.26;camera.left=-height*w/h/2;camera.right=height*w/h/2;camera.top=height/2;camera.bottom=-height/2;camera.near=DIM.diameter/100;camera.far=DIM.fluteLength*10;camera.updateProjectionMatrix();renderer.setSize(w,h);render();}
+rotation.addEventListener('input',()=>{document.querySelector('#angle').textContent=rotation.value+'°';render();});highlight.addEventListener('change',()=>{markers.forEach(m=>m.visible=highlight.checked);render();});new ResizeObserver(resize).observe(stage);
+renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();showError('WebGL 繪圖環境已中斷，請重新整理');});
+rotation.disabled=false;highlight.disabled=false;loading.hidden=true;error.style.display='none';document.body.classList.add('render-ok');document.querySelector('#status').textContent='Ø '+DIM.diameter+' mm / HELIX '+DIM.helixAngleDeg+'° / TWO MARGINS';resize();
+}catch(e){clearTimeout(timeout);showError(e.message||String(e));}
+</script></body></html>
